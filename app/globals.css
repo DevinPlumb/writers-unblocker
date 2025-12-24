@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap');
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --color-bg: #0d0c0f;
@@ -13,15 +13,15 @@
   --color-border: #2a2630;
   --color-error: #e85454;
   --color-success: #4ade80;
-  
+
   --font-display: 'Cormorant Garamond', Georgia, serif;
   --font-body: 'DM Sans', system-ui, sans-serif;
   --font-screenplay: 'Courier Prime', 'Courier New', monospace;
-  
+
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 20px;
-  
+
   --transition: 0.2s ease;
 }
 
@@ -52,7 +52,7 @@ body::before {
 
 /* App Layout */
 .app-container {
-  max-width: 1200px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 2rem 1.5rem;
   min-height: 100vh;
@@ -62,8 +62,8 @@ body::before {
 
 .app-header {
   text-align: center;
-  margin-bottom: 3rem;
-  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -72,7 +72,7 @@ body::before {
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
 }
 
 .logo svg {
@@ -81,59 +81,125 @@ body::before {
 
 .logo h1 {
   font-family: var(--font-display);
-  font-size: 2.5rem;
+  font-size: 2.25rem;
   font-weight: 500;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, var(--color-text) 0%, var(--color-accent) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-text) 0%,
+    var(--color-accent) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.tagline {
+/* Step Indicator */
+.step-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.step {
+  font-size: 0.85rem;
   color: var(--color-text-muted);
-  font-size: 1.1rem;
-  font-style: italic;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
 }
 
+.step.active {
+  color: var(--color-accent);
+  background: var(--color-accent-glow);
+  font-weight: 500;
+}
+
+.step.completed {
+  color: var(--color-success);
+}
+
+.step-divider {
+  color: var(--color-border);
+  font-size: 0.75rem;
+}
+
+/* Main Content - Wizard Style */
 .main-content {
-  display: grid;
-  gap: 2.5rem;
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
-@media (min-width: 768px) {
-  .main-content {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr;
+/* Back Button */
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-bottom: 1.5rem;
+  width: fit-content;
+}
+
+.btn-back:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* Step Content */
+.step-content {
+  flex: 1;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-  
-  .quote-section {
-    grid-column: 1 / -1;
-  }
-  
-  .prompt-section {
-    grid-column: 1;
-  }
-  
-  .scene-section {
-    grid-column: 2;
-    grid-row: 2;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@media (min-width: 1024px) {
-  .main-content {
-    grid-template-columns: 1fr 1fr 1.2fr;
-    grid-template-rows: 1fr;
-  }
-  
-  .quote-section,
-  .prompt-section,
-  .scene-section {
-    grid-column: auto;
-    grid-row: auto;
-  }
+.step-section {
+  width: 100%;
+}
+
+/* Start Over Button */
+.btn-start-over {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.btn-start-over:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }
 
 /* Quote Carousel */
@@ -141,19 +207,19 @@ body::before {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: 1.5rem;
+  padding: 2rem;
 }
 
 .carousel-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .carousel-header h2 {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 500;
 }
 
@@ -185,13 +251,13 @@ body::before {
 .carousel-container {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .carousel-nav {
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -210,10 +276,14 @@ body::before {
 
 .quote-card {
   flex: 1;
-  background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-secondary) 0%,
+    var(--color-bg) 100%
+  );
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: 2rem;
+  padding: 2.5rem 2rem;
   text-align: center;
   position: relative;
   transition: var(--transition);
@@ -226,64 +296,70 @@ body::before {
 
 .quote-mark {
   font-family: var(--font-display);
-  font-size: 4rem;
+  font-size: 5rem;
   color: var(--color-accent);
   opacity: 0.3;
   line-height: 1;
-  margin-bottom: -1rem;
+  margin-bottom: -1.5rem;
 }
 
 .quote-content {
   font-family: var(--font-display);
-  font-size: 1.35rem;
+  font-size: 1.5rem;
   font-style: italic;
   line-height: 1.7;
   color: var(--color-text);
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .quote-author {
   display: block;
   font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--color-accent);
   font-style: normal;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .btn-select {
-  background: transparent;
-  border: 1px solid var(--color-accent-dim);
-  color: var(--color-accent);
-  padding: 0.75rem 1.5rem;
+  background: linear-gradient(
+    135deg,
+    var(--color-accent) 0%,
+    var(--color-accent-dim) 100%
+  );
+  border: none;
+  color: var(--color-bg);
+  padding: 1rem 2rem;
   border-radius: var(--radius-sm);
   font-family: var(--font-body);
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
 }
 
 .btn-select:hover {
-  background: var(--color-accent);
-  color: var(--color-bg);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--color-accent-glow);
 }
 
 .btn-select.selected {
-  background: var(--color-accent);
-  color: var(--color-bg);
+  background: var(--color-success);
 }
 
 .carousel-dots {
   display: flex;
   justify-content: center;
   gap: 0.5rem;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
 }
 
 .dot {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: var(--color-border);
   border: none;
@@ -302,12 +378,20 @@ body::before {
 
 /* Loading skeleton */
 .quote-card.loading {
-  min-height: 200px;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .skeleton-text {
-  height: 1.2rem;
-  background: linear-gradient(90deg, var(--color-border) 25%, var(--color-bg-secondary) 50%, var(--color-border) 75%);
+  height: 1.4rem;
+  background: linear-gradient(
+    90deg,
+    var(--color-border) 25%,
+    var(--color-bg-secondary) 50%,
+    var(--color-border) 75%
+  );
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.5s infinite;
   border-radius: 4px;
@@ -323,16 +407,25 @@ body::before {
 .skeleton-author {
   width: 40%;
   height: 1rem;
-  margin: 1rem auto 0;
-  background: linear-gradient(90deg, var(--color-border) 25%, var(--color-bg-secondary) 50%, var(--color-border) 75%);
+  margin: 1.5rem auto 0;
+  background: linear-gradient(
+    90deg,
+    var(--color-border) 25%,
+    var(--color-bg-secondary) 50%,
+    var(--color-border) 75%
+  );
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.5s infinite;
   border-radius: 4px;
 }
 
 @keyframes skeleton-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* Prompt Form */
@@ -340,31 +433,33 @@ body::before {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: 1.5rem;
+  padding: 2rem;
 }
 
 .form-header {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .form-header h2 {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 500;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
 .form-subtitle {
   color: var(--color-text-muted);
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .selected-quote-preview {
   background: var(--color-accent-glow);
   border: 1px solid var(--color-accent-dim);
-  border-radius: var(--radius-sm);
-  padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .selected-quote-preview .label {
@@ -373,19 +468,19 @@ body::before {
   color: var(--color-accent);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
 .selected-quote-preview .preview-text {
   font-family: var(--font-display);
   font-style: italic;
-  color: var(--color-text-muted);
-  font-size: 0.9rem;
+  color: var(--color-text);
+  font-size: 1.1rem;
 }
 
 .input-group {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .prompt-input {
@@ -393,12 +488,12 @@ body::before {
   background: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: 1rem;
+  padding: 1.25rem;
   color: var(--color-text);
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: 1.1rem;
   resize: vertical;
-  min-height: 120px;
+  min-height: 150px;
   transition: var(--transition);
 }
 
@@ -421,7 +516,7 @@ body::before {
 .char-count {
   position: absolute;
   bottom: 0.75rem;
-  right: 0.75rem;
+  right: 1rem;
   font-size: 0.75rem;
   color: var(--color-text-muted);
 }
@@ -429,6 +524,7 @@ body::before {
 .error-message {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   color: var(--color-error);
   font-size: 0.875rem;
@@ -444,13 +540,17 @@ body::before {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dim) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-accent) 0%,
+    var(--color-accent-dim) 100%
+  );
   border: none;
   color: var(--color-bg);
-  padding: 1rem 1.5rem;
+  padding: 1.25rem 2rem;
   border-radius: var(--radius-md);
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
@@ -472,8 +572,12 @@ body::before {
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Scene Viewer */
@@ -481,24 +585,23 @@ body::before {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: 1.5rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  min-height: 400px;
 }
 
 .scene-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--color-border);
 }
 
 .scene-header h2 {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 500;
 }
 
@@ -514,10 +617,10 @@ body::before {
   background: transparent;
   border: 1px solid var(--color-border);
   color: var(--color-text-muted);
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem 1rem;
   border-radius: var(--radius-sm);
   font-family: var(--font-body);
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   cursor: pointer;
   transition: var(--transition);
 }
@@ -537,6 +640,7 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 300px;
 }
 
 .empty-state {
@@ -574,7 +678,9 @@ body::before {
 }
 
 @keyframes blink {
-  50% { opacity: 0; }
+  50% {
+    opacity: 0;
+  }
 }
 
 .generating-text {
@@ -584,13 +690,13 @@ body::before {
 
 .screenplay {
   font-family: var(--font-screenplay);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   line-height: 1.8;
   white-space: pre-wrap;
   color: var(--color-text);
   background: var(--color-bg);
-  border-radius: var(--radius-sm);
-  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  padding: 2rem;
   border: 1px solid var(--color-border);
 }
 
@@ -598,7 +704,7 @@ body::before {
 .app-footer {
   text-align: center;
   padding-top: 2rem;
-  margin-top: auto;
+  margin-top: 2rem;
   border-top: 1px solid var(--color-border);
 }
 
@@ -632,24 +738,45 @@ body::before {
   .app-container {
     padding: 1rem;
   }
-  
+
   .logo h1 {
     font-size: 1.75rem;
   }
-  
-  .tagline {
-    font-size: 0.95rem;
+
+  .step-indicator {
+    gap: 0.25rem;
   }
-  
+
+  .step {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.5rem;
+  }
+
+  .step-divider {
+    font-size: 0.65rem;
+  }
+
   .carousel-nav {
     display: none;
   }
-  
+
   .quote-content {
-    font-size: 1.15rem;
+    font-size: 1.25rem;
   }
-  
+
+  .quote-mark {
+    font-size: 4rem;
+  }
+
+  .quote-carousel,
+  .prompt-form-container,
   .scene-viewer {
-    min-height: 300px;
+    padding: 1.5rem;
+  }
+
+  .carousel-header h2,
+  .form-header h2,
+  .scene-header h2 {
+    font-size: 1.5rem;
   }
 }
